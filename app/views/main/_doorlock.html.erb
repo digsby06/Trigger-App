@@ -1,0 +1,9 @@
+<div id="audio" class="container-wrapper">
+	<h2><%= section.event %></h2>
+	  <audio id="sound_effect" class="audio_player" controls="false" preload="true">
+  		<source src="<%= @events %>" type="audio">
+		</audio>
+	<button id="icon" class="event-btn">
+		<%= image_tag("doorlock_btn.png", class: "img-swap", id: "playsound") %>
+	</button>
+</div>

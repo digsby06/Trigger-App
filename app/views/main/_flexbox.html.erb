@@ -1,0 +1,31 @@
+<!-- Begin Top Row Content -->
+<div class="ipad-row">
+  <div class="col-md-4">
+    <%= @main_section.render if @main_section %>
+  </div>
+  <div>
+    <%@second_section.each do |section| %>
+      <div class="col-md-4">
+        <%= render partial: section.raw_event, locals: {section: section} if section %>
+      </div>
+    <% end %>
+<div class="clear"></div>
+  </div>
+
+</div>
+<!-- End Top Row Content -->
+<!-- Begin Second Row Content -->
+
+  <div class="ipad-row">
+    <div>
+    <%@third_section.each do |section| %>
+    <div id="bottom-row" class="col-md-4">
+      <%= render partial: section.raw_event, locals: {section: section} if section %>
+    </div>
+    <% end %>
+    </div>
+  </div>
+  
+<!-- End Second Row Content -->
+
+<!--   <%= render partial: 'no_sections' if @no_sections_found %> -->
