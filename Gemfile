@@ -37,6 +37,8 @@ gem 'devise'
 gem 'draper'
 gem 'carrierwave'
 gem "font-awesome-rails"
+gem 'phidgets-ffi'
+gem 'ffi', '~> 1.9', '>= 1.9.10'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -16,33 +16,76 @@
 
 
 
+//////////////////////////////////// Toggle Icon Images 
 
 $(document).ready(function(){
-$('#playsound').on('click', function (e) {
-  e.preventDefault();
-  $('#sound_effect').currentTime = 0;
-  $('#sound_effect').get(0).play();
-  return false;
-});
+  $(".img-swap").click(function() {
+    $(".img-swap.btn").each(function(){
+        this.src = this.src.replace("_btn", "_active");
+        $(this).removeClass("active");
+    });
+    if ($(this).attr("class") == "img-swap") {
+      this.src = this.src.replace("_active","_btn");
+    } else {
+      this.src = this.src.replace("_btn","_active");
+    }
+    $(this).toggleClass("btn");
+  });
 });
 
+
+//////////////////////////////////// Click to Play Audio
+
 $(document).ready(function(){
-$(".img-swap:not(.active)").hover(
-    function(){this.src = this.src.replace("_btn","_active");},
-    function(){
-        if(!$(this).hasClass('active')){
-            this.src = this.src.replace("_active","_btn");
+  
+    var $players = $('.player');
+    var $playButtons = $('.play');
+    
+    function onPlayClick(playButton, player) {
+        if (player.paused) {
+            player.play();
+        } else {
+            player.pause();
         }
-    });
-    $(".img-swap").click(function(){
-        $(".img-swap.active").each(function(){
-            this.src = this.src.replace("_active","_btn");
-            $(this).removeClass('active');
-        });
-    $(this).toggleClass('active');
-    });
+    }
+
+    for(var i = 0; i < $playButtons.length; i++) {
+        var playButton = $playButtons[i];
+        var player = $players[i];
+        $(playButton).click(onPlayClick.bind(null, playButton, player));  
+    }    
 });
 
+//////////////////////////////////// One Audio File at at Time
+
+document.addEventListener('play', function(e){
+    var audios = document.getElementsByTagName('audio');
+    for(var i = 0, len = audios.length; i < len;i++){
+        if(audios[i] != e.target){
+            audios[i].pause();
+            audios[i].currentTime = 0;
+        }
+    }
+}, true);
+
+//////////////////////////////////// Mute All Audio
+
+$(document).ready(function(e) {
+    
+   $('audio').on('loadeddata', function(e) {
+       console.log('onloadeddata', e.target);
+       $(this).prop("muted", true);
+    });
+   var isMuted = true; 
+    $('#mutebutton').click(function(e) {
+        isMuted = !isMuted;
+        $('audio').prop("muted", isMuted);
+    });
+    
+});
+
+
+//////////////////////////////////// Phidgets 
 
 $(function(){
     $('.event-btn').click(function(e){

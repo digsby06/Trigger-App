@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
 
-  get 'audios/index'
+  # get 'audios/index'
 
-  get 'audios/show'
+  # get 'audios/show'
 
-  get 'audios/new'
+  # get 'audios/new'
 
   resources :sections
   resources :audios
@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'main#index'
+  get 'trigger' => 'main#trigger'
+  get 'stats' => 'main#stats'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

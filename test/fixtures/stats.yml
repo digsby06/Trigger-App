@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2016-05-13
+  button_id: 1
+  count: 1
+
+two:
+  date: 2016-05-13
+  button_id: 1
+  count: 1

@@ -1,6 +1,8 @@
 <div class="container-wrapper">
 	<h2><%= section.event %></h2>
-	<button class="event-btn">
-		<%= image_tag("light_btn.png", class: "img-swap") %>
+
+	<%= audio_tag (section.audio.music), class: "player", controls: false, autoplay: false, preload: true %>
+	<button data-id="4" class="event-btn play">
+		<%= image_tag("light_active.png", class: "img-swap") %>
 	</button>
 </div>

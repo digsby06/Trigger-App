@@ -1,11 +1,11 @@
 <!-- Begin Top Row Content -->
 <div class="ipad-row">
-  <div class="col-md-4">
+  <div class="grid-item">
     <%= @main_section.render if @main_section %>
   </div>
   <div>
     <%@second_section.each do |section| %>
-      <div class="col-md-4">
+      <div class="grid-item">
         <%= render partial: section.raw_event, locals: {section: section} if section %>
       </div>
     <% end %>
@@ -19,7 +19,7 @@
   <div class="ipad-row">
     <div>
     <%@third_section.each do |section| %>
-    <div id="bottom-row" class="col-md-4">
+    <div id="bottom-row" class="grid-item">
       <%= render partial: section.raw_event, locals: {section: section} if section %>
     </div>
     <% end %>
@@ -27,5 +27,16 @@
   </div>
   
 <!-- End Second Row Content -->
+
+<!-- Mute Button -->
+
+<div class="ipad-row">
+     <input id="mutebutton" class="native-hidden" type="checkbox" />
+</div>
+
+<!-- End Mute Button -->
+
+
+
 
 <!--   <%= render partial: 'no_sections' if @no_sections_found %> -->

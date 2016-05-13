@@ -1,0 +1,29 @@
+<div class="stats">
+   <table class="pure-table">
+    <thead>
+      <tr>
+        <td>Date</td>
+        <td>Button 1</td>
+        <td>Button 2</td>
+        <td>Button 3</td>
+        <td>Button 4</td>
+        <td>Button 5</td>
+        <td>Button 6</td>
+        <td>Total</td>
+      </tr>
+    </thead>
+    <tbody>
+        <% @stats.each do |row| %>
+          <tr>
+            <td><%= row[:date] %></td>
+            <td><%= row[:data][1] %></td>
+            <td><%= row[:data][2] %></td>
+            <td><%= row[:data][3] %></td>
+            <td><%= row[:data][4] %></td>
+            <td><%= row[:data][5] %></td>
+            <td><%= row[:data][6] %></td>
+            <td><%= row[:data][0] %></td>
+          </tr>
+        <% end %>
+    </tbody>
+</div>

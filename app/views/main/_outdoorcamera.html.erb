@@ -1,7 +1,7 @@
 <div class="container-wrapper">
 	<h2><%= section.event %></h2>
-	<h2><%= @songs %></h2>
-	<button class="event-btn">
-		<%= image_tag("outdoorcamera_btn.png", class: "img-swap") %>
+	<%= audio_tag (section.audio.music), class: "player", controls: false, autoplay: false, preload: true %>
+	<button data-id="5" class="event-btn play">
+		<%= image_tag("outdoorcamera_active.png", class: "img-swap") %>
 	</button>
 </div>

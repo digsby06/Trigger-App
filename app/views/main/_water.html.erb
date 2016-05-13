@@ -1,6 +1,18 @@
-<div class="container-wrapper">
-	<h2><%= section.event %></h2>
-	<button class="event-btn" id="sound">
-		<%= image_tag("water_btn.png", :id => "water-event-btn", class: "img-swap") %>
-	</button>
-</div>
+<% if @no_music_uploaded %>
+	<div class="container-wrapper">
+		<h2><%= section.event %></h2>
+		<button class="event-btn play">
+			<%= image_tag("water_active.png", class: "img-swap") %>
+		</button>
+	</div>
+	
+<% else %>
+	
+	<div class="container-wrapper">
+		<h2><%= section.event %></h2>
+		<%= audio_tag (section.audio.music), class: "player", controls: false, autoplay: false, preload: true %>
+		<button data-id="2" class="event-btn play">
+			<%= image_tag("water_active.png", class: "img-swap") %>
+		</button>
+	</div>
+<% end %>

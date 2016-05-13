@@ -13,10 +13,14 @@ class MusicUploader < CarrierWave::Uploader::Base
   # This is a sensible default for uploaders that are meant to be mounted:
 
   # include Rails.application.routes.url_helpers
-  # Rails.application.routes.default_url_options = ActionMailer::Base.default_url_options
+  Rails.application.routes.default_url_options = ActionMailer::Base.default_url_options
   
   def store_dir
-    "#{Rails.root}/app/assets/audios/#{model.id}"
+     if Rails.env.test?
+    "#{Rails.root}/app/public/audios/#{model.id}"
+    else
+      "#{Rails.root}/public/audios/#{model.id}"
+    end
   end
 
   def cache_dir
@@ -28,7 +32,7 @@ class MusicUploader < CarrierWave::Uploader::Base
  
 
   def default_url
-    ActionController::Base.helpers.asset_path("/audios/" + [version_name, "default.mp3"].compact.join('_'))
+   ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.mp3"].compact.join('_'))
   end
 
 

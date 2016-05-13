@@ -6,6 +6,8 @@ belongs_to :audio
 
   	SONGS = Audio.all
 
+  	accepts_nested_attributes_for :audio, :allow_destroy => true
+
   	def self.songs
   		SONGS
   	end
