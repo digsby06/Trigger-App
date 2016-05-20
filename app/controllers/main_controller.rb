@@ -1,6 +1,16 @@
 require 'phidgets-ffi'
 
 class MainController < ApplicationController
+
+    $setup = false
+    $counter = 1
+    $ambient_button = 1
+    $last_press_time = Time.now
+    options = { :serial_number => 403823 }
+    $ifkit = Phidgets::InterfaceKit.new(options)
+    $ifkit.wait_for_attachment 5000
+    TimeController.timecheck
+
 	def index
 		@events = Section.all
 		@audio = Audio.all
@@ -12,11 +22,8 @@ class MainController < ApplicationController
 
 	def trigger
         button_id = params[:button_id]
-
-        options = { :serial_number => 403823 }
-        ifkit = Phidgets::InterfaceKit.new(options)
-        ifkit.wait_for_attachment 5000
-        if ifkit.outputs.size > 0
+       
+        if $ifkit.outputs.size > 0
             activate_relay(ifkit, button_id)
 
             # How to test for success
@@ -27,9 +34,9 @@ class MainController < ApplicationController
         else
             render json: {"error": "No device attached"}
         end
-        ifkit.close
+        $ifkit.close
     rescue => error
-        ifkit.close
+        $ifkit.close
     end
 
     def stats
@@ -61,15 +68,17 @@ class MainController < ApplicationController
         params.require(:button_id)
     end
 
+
+
     def activate_relay(ifkit, button_id)
-        relay = ifkit.outputs[button_id.to_i]
+        relay = $ifkit.outputs[button_id.to_i]
         
-        send_message(button_id)
+        # send_message(button_id)
 
         case button_id.to_i - 1
-        
+  
             when 0
-                relay_0 = ifkit.outputs[0]
+                relay_0 = $ifkit.outputs[0]
                 puts "Alternating for 30 seconds"
                 8.times do
                     relay_0.state = false
@@ -82,6 +91,8 @@ class MainController < ApplicationController
                 end
                 relay_0.state = false
                 relay.state = false
+                $last_press_time = Time.now
+                puts $last_press_time
                 puts "Finished"
 
             when 1
@@ -122,21 +133,23 @@ class MainController < ApplicationController
         end
     end
 
-    def send_message(button_id)
-        require 'socket'
 
-        server_ip = '192.168.10.10'
-        server_port = 5000
+    # def send_message(button_id)
+    #     require 'socket'
 
-        connection = TCPSocket.open(server_ip, server_port)
+    #     server_ip = '192.168.10.10'
+    #     server_port = 5000
 
-        connection.puts "\"Track#{button_id}.wav\"PL\x0d"
-        connection.close
-    end
+    #     connection = TCPSocket.open(server_ip, server_port)
+
+    #     connection.puts "\"Track#{button_id}.wav\"PL\x0d"
+    #     connection.close
+    # end
 
   def time_trigger
         self.delay(:run_at)
   end
+    
 
 
 end
