@@ -20,7 +20,7 @@ class MainController < ApplicationController
         if  ifkit.outputs.size > 0
             activate_relay(ifkit, button_id)
 
-            # How to test for success
+         
             @stat = Stat.find_or_create_by(button_id: button_id, date:DateTime.now.to_date)
             @stat.count += 1
             @stat.save
