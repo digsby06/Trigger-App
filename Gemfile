@@ -39,6 +39,9 @@ gem 'carrierwave'
 gem "font-awesome-rails"
 gem 'phidgets-ffi'
 gem 'ffi', '~> 1.9', '>= 1.9.10'
+gem 'delayed_job_active_record'
+gem 'time_difference'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -2,15 +2,6 @@ require 'phidgets-ffi'
 
 class MainController < ApplicationController
 
-    $setup = false
-    $counter = 1
-    $ambient_button = 1
-    $last_press_time = Time.now
-    options = { :serial_number => 403823 }
-    $ifkit = Phidgets::InterfaceKit.new(options)
-    $ifkit.wait_for_attachment 5000
-    TimeController.timecheck
-
 	def index
 		@events = Section.all
 		@audio = Audio.all
@@ -22,8 +13,11 @@ class MainController < ApplicationController
 
 	def trigger
         button_id = params[:button_id]
+        options = { :serial_number => 403823 }
+        ifkit = Phidgets::InterfaceKit.new(options)
+        ifkit.wait_for_attachment 5000
        
-        if $ifkit.outputs.size > 0
+        if  ifkit.outputs.size > 0
             activate_relay(ifkit, button_id)
 
             # How to test for success
@@ -34,9 +28,9 @@ class MainController < ApplicationController
         else
             render json: {"error": "No device attached"}
         end
-        $ifkit.close
+        ifkit.close
     rescue => error
-        $ifkit.close
+        ifkit.close
     end
 
     def stats
@@ -71,66 +65,95 @@ class MainController < ApplicationController
 
 
     def activate_relay(ifkit, button_id)
-        relay = $ifkit.outputs[button_id.to_i]
+        relay = ifkit.outputs[button_id.to_i]
+        current_time = Time.now
+        start_ambient_mode = 1
+
+    
         
-        # send_message(button_id)
+            case button_id.to_i - 1
+      
+                when 0
+                    relay_0 = ifkit.outputs[0]
+                    puts "Alternating for 30 seconds"
+                    8.times do
+                        relay_0.state = false
+                        relay.state = true
+                        sleep(1.seconds)
 
-        case button_id.to_i - 1
-  
-            when 0
-                relay_0 = $ifkit.outputs[0]
-                puts "Alternating for 30 seconds"
-                8.times do
+                        relay_0.state = true
+                        relay.state = false
+                        sleep(1.seconds)
+                    end
+
                     relay_0.state = false
-                    relay.state = true
-                    sleep(1.seconds)
-
-                    relay_0.state = true
                     relay.state = false
-                    sleep(1.seconds)
-                end
-                relay_0.state = false
-                relay.state = false
-                $last_press_time = Time.now
-                puts $last_press_time
-                puts "Finished"
+                    puts "Finished"
+                    last_press_time = Time.now
+                    puts last_press_time
 
-            when 1
-                puts "Turning on for 30 seconds"
-                relay.state = true
-                sleep(16.seconds)
-                
-                puts "Shutting off"
-                relay.state = false
-
-            when 2
-                puts "Turning on for 30 seconds"
-                relay.state = true
-                sleep(12.seconds)
-                
-                puts "Shutting off"
-                relay.state = false
-            
-            when 3
-                puts "Blinking for 30 seconds"
-                15.times do
+                when 1
+                    puts "Turning on for 30 seconds"
                     relay.state = true
-                    sleep(0.5.seconds)
+                    sleep(16.seconds)
                     
+                    puts "Shutting off"
                     relay.state = false
-                    sleep(0.5.seconds)
-                end
-                puts "Finished"
+                    last_press_time = Time.now
 
-            when 4..5
-                puts "Turning on for 30 seconds"
-                relay.state = true
-                sleep(15.seconds)
+
+                when 2
+                    puts "Turning on for 30 seconds"
+                    relay.state = true
+                    sleep(12.seconds)
+                    
+                    puts "Shutting off"
+                    relay.state = false
+                    last_press_time = Time.now
                 
-                puts "Shutting off"
-                relay.state = false
-            
+                when 3
+                    puts "Blinking for 30 seconds"
+                    15.times do
+                        relay.state = true
+                        sleep(0.5.seconds)
+                        
+                        relay.state = false
+                        sleep(0.5.seconds)
+                    end
+                    puts "Finished"
+                    last_press_time = Time.now
+
+                when 4..5
+                    puts "Turning on for 30 seconds"
+                    relay.state = true
+                    sleep(15.seconds)
+                    
+                    puts "Shutting off"
+                    relay.state = false
+                    last_press_time = Time.now
+                
+            end
+
+           end
+
+
+
+        if TimeDifference.between(last_press_time, current_time).in_minutes === start_ambient_mode
+
+            puts "Cycling through all events"
+           
+            i = 0
+
+            until i > 5 do
+            ambient_mode = ifkit.outputs[i]
+            i += 1
+            end
+
+            puts "Ambient Relay Complete"
+            last_press_time = Time.now
         end
+      
+
     end
 
 
@@ -150,6 +173,4 @@ class MainController < ApplicationController
         self.delay(:run_at)
   end
     
-
-
 end
