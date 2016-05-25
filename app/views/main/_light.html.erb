@@ -2,7 +2,6 @@
 	<h2><%= section.event %></h2>
 
 	<%= audio_tag (section.audio.music), class: "player", controls: false, autoplay: false, preload: true %>
-	<button data-id="4" class="event-btn play">
-		<%= image_tag("light_active.png", class: "img-swap") %>
+	<button id="light-btn" data-id="4" class="event-btn play">
 	</button>
 </div>

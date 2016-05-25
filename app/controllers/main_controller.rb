@@ -11,16 +11,22 @@ class MainController < ApplicationController
 		@no_sections_found = Section.main_section.nil?
 	end
 
+
 	def trigger
         button_id = params[:button_id]
         options = { :serial_number => 403823 }
         ifkit = Phidgets::InterfaceKit.new(options)
         ifkit.wait_for_attachment 5000
-       
-        if  ifkit.outputs.size > 0
+
+        if ifkit.outputs.size > 0
             activate_relay(ifkit, button_id)
 
-         
+            if @@last_press_time.present?
+                puts "Time to start tracking time."
+                sleep(10)
+                activate_ambient_mode(ifkit, button_id)   
+            end
+            
             @stat = Stat.find_or_create_by(button_id: button_id, date:DateTime.now.to_date)
             @stat.count += 1
             @stat.save
@@ -66,10 +72,6 @@ class MainController < ApplicationController
 
     def activate_relay(ifkit, button_id)
         relay = ifkit.outputs[button_id.to_i]
-        current_time = Time.now
-        start_ambient_mode = 1
-
-    
         
             case button_id.to_i - 1
       
@@ -89,8 +91,8 @@ class MainController < ApplicationController
                     relay_0.state = false
                     relay.state = false
                     puts "Finished"
-                    last_press_time = Time.now
-                    puts last_press_time
+                    @@last_press_time = Time.now
+                    puts @@last_press_time
 
                 when 1
                     puts "Turning on for 30 seconds"
@@ -99,7 +101,7 @@ class MainController < ApplicationController
                     
                     puts "Shutting off"
                     relay.state = false
-                    last_press_time = Time.now
+                    @@last_press_time = Time.now
 
 
                 when 2
@@ -109,7 +111,7 @@ class MainController < ApplicationController
                     
                     puts "Shutting off"
                     relay.state = false
-                    last_press_time = Time.now
+                    @@last_press_time = Time.now
                 
                 when 3
                     puts "Blinking for 30 seconds"
@@ -121,7 +123,7 @@ class MainController < ApplicationController
                         sleep(0.5.seconds)
                     end
                     puts "Finished"
-                    last_press_time = Time.now
+                    @@last_press_time = Time.now
 
                 when 4..5
                     puts "Turning on for 30 seconds"
@@ -130,30 +132,42 @@ class MainController < ApplicationController
                     
                     puts "Shutting off"
                     relay.state = false
-                    last_press_time = Time.now
+                    @@last_press_time = Time.now
                 
             end
+    end
 
-           end
+    def activate_ambient_mode(ifkit, button_id) 
+        # current_time = Time.now
+        # start_ambient_mode = 1.minutes
 
-
-
-        if TimeDifference.between(last_press_time, current_time).in_minutes === start_ambient_mode
-
+        # if TimeDifference.between(@@last_press_time, current_time).in_minutes === start_ambient_mode
+            puts "Starting Ambient Mode"
             puts "Cycling through all events"
-           
-            i = 0
+            
 
-            until i > 5 do
-            ambient_mode = ifkit.outputs[i]
-            i += 1
-            end
+            # until counter > 5 do
+                ambient_mode = ifkit.outputs[button_id.to_i]
+
+                    case button_id.to_i - 1
+                        when 0..5
+                            puts "Turning on for 30 seconds"
+                            relay.state = true
+                            sleep(15.seconds)
+                            
+                            puts "Shutting off"
+                            relay.state = false
+                            @@last_press_time = Time.now
+                    end
+
+            #     button_id.to_i += 1
+            #     counter += 1
+            # end
 
             puts "Ambient Relay Complete"
-            last_press_time = Time.now
-        end
-      
-
+            @@last_press_time = Time.now
+        # end
+    
     end
 
 

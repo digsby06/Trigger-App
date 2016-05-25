@@ -3,7 +3,6 @@
 	<% if section.audio.music.present? %>
 		<%= audio_tag (section.audio.music), class: "player", controls: false, autoplay: false, preload: true %>
 	<% end %>
-	<button data-id="1" class="event-btn play">
-		<%= image_tag("temperature_active.png", class: "img-swap") %>
+	<button id="thermostat-btn" data-id="1" class="event-btn play">
 	</button>
 </div>

@@ -265,19 +265,24 @@ body {
   font-size: 16px;
   font-color:#333;
   -webkit-text-size-adjust: 100%;
-  background: rgba(76,169,12,1);
-  background: -moz-linear-gradient(left, rgba(76,169,12,1) 0%, rgba(196,216,45,1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(76,169,12,1)), color-stop(100%, rgba(196,216,45,1)));
-  background: -webkit-linear-gradient(left, rgba(76,169,12,1) 0%, rgba(196,216,45,1) 100%);
-  background: -o-linear-gradient(left, rgba(76,169,12,1) 0%, rgba(196,216,45,1) 100%);
-  background: -ms-linear-gradient(left, rgba(76,169,12,1) 0%, rgba(196,216,45,1) 100%);
-  background: linear-gradient(to right, rgba(76,169,12,1) 0%, rgba(196,216,45,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4ca90c', endColorstr='#c4d82d', GradientType=1 );
+  background: url('/images/table_texture.jpg') no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+  // background: rgba(76,169,12,1);
+  // background: -moz-linear-gradient(left, rgba(76,169,12,1) 0%, rgba(196,216,45,1) 100%);
+  // background: -webkit-gradient(left top, right top, color-stop(0%, rgba(76,169,12,1)), color-stop(100%, rgba(196,216,45,1)));
+  // background: -webkit-linear-gradient(left, rgba(76,169,12,1) 0%, rgba(196,216,45,1) 100%);
+  // background: -o-linear-gradient(left, rgba(76,169,12,1) 0%, rgba(196,216,45,1) 100%);
+  // background: -ms-linear-gradient(left, rgba(76,169,12,1) 0%, rgba(196,216,45,1) 100%);
+  // background: linear-gradient(to right, rgba(76,169,12,1) 0%, rgba(196,216,45,1) 100%);
+  // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4ca90c', endColorstr='#c4d82d', GradientType=1 );
 }
 
 input,
 button,
-select,
+select, 
 textarea {
   font-family: inherit;
   font-size: inherit;
@@ -377,12 +382,21 @@ hr {
   padding-left: 15px;
   padding-right: 15px;
 }
+.logo-wrap {
+  text-align: right;
+}
+
+.logo {
+  width: 250px;
+  margin: 3% 8% 0 5%;
+  padding-bottom: 20px;
+}
 
 /* 3. Event Containers ------------------------------------------------------------*/
 
 .container-wrapper {
-  width:170px;
-  height: 120px;
+  width:235px;
+  height: 215px;
   background:#fff;
   border:0px solid #ccc;
   text-align:left;
@@ -395,7 +409,7 @@ hr {
 
 .container-wrapper h2 {
   font-family: Omnes_ATTRegularItalic;
-  font-size: 14px;
+  font-size: 20px;
   color: #333;
   padding-top: 15px;
   padding-left: 15px;
@@ -426,9 +440,22 @@ ul#menu {
 
 ul#menu li {
     float: right;
-    padding: 10px;
+    padding: 10px 30px 10px 30px;
     font-size: 18px;
-    font-family: Omnes_ATTLightRegular;
+    font-family: Omnes_ATTRegularRegular;
+}
+
+ul#menu li:nth-child(2) {
+  color: #81017e;
+  font-family: Omnes_ATTRegularRegular;
+  border-bottom: 3px solid #81017e;
+  width: 65px;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+ul#menu li:first-child {
+  padding: 10px 10px 10px 30px;
 }
 
 #menu li:last-child {
@@ -458,9 +485,100 @@ button.event-btn {
   margin-right: auto;
 }
 
+#thermostat-btn{
+  background-image: url("/images/flat_thermostat_active.png");
+  background-size: 150px 150px;
+  width: 150px;
+  height: 150px;
+}
+
+#thermostat-btn:active{
+  background-image: url("/images/flat_thermostat_btn.png");
+  background-size: 150px 150px;
+  width: 150px;
+  height: 150px;
+
+}
+
+#water-btn{
+  background-image: url("/images/flat_water_active.png");
+  background-size: 150px 150px;
+  width: 150px;
+  height: 150px;
+}
+
+#water-btn:active{
+  background-image: url("/images/flat_water_btn.png");
+  background-size: 150px 150px;
+  width: 150px;
+  height: 150px;
+
+}
+#homesecurity-btn{
+  background-image: url("/images/flat_homesecurity_active.png");
+  background-size: 150px 150px;
+  width: 150px;
+  height: 150px;
+}
+
+#homesecurity-btn:active{
+  background-image: url("/images/flat_homesecurity_btn.png");
+  background-size: 150px 150px;
+  width: 150px;
+  height: 150px;
+
+}
+#light-btn{
+  background-image: url("/images/flat_light_active.png");
+  background-size: 150px 150px;
+  width: 150px;
+  height: 150px;
+}
+
+#light-btn:active{
+  background-image: url("/images/flat_light_btn.png");
+  background-size: 150px 150px;
+  width: 150px;
+  height: 150px;
+
+}
+#outdoorcamera-btn{
+  background-image: url("/images/flat_outdoorcamera_active.png");
+  background-size: 150px 150px;
+  width: 150px;
+  height: 150px;
+}
+
+#outdoorcamera-btn:active{
+  background-image: url("/images/flat_outdoorcamera_btn.png");
+  background-size: 150px 150px;
+  width: 150px;
+  height: 150px;
+
+}
+
+#door-btn{
+  background-image: url("/images/flat_doorLock_active.png");
+  background-size: 150px 150px;
+  width: 150px;
+  height: 150px;
+}
+
+#door-btn:active{
+  background-image: url("/images/flat_doorLock_btn.png");
+  background-size: 150px 150px;
+  width: 150px;
+  height: 150px;
+
+}
+
+
+
+
 .event-btn img {
-  width: 75px;
-  display: block;
+  width: 85px;
+  padding-top: 5px;
+  display: inline-block;
   margin-left: auto;
   margin-right: auto;
 }
@@ -479,23 +597,23 @@ img {
 
 #ipad-container {
   /*cursor: none; /* let windows do that ;) */
-  background: url('http://www.joeybobby.com/iPad%20Air%20Mockup%20(for%20Joey)/ipad-air-horizontal.png') no-repeat center;
+  background: url('/images/ipad-air-horizontal.png') no-repeat center;
   background-size: 100% 100%;
-  width: 690px;
-  height: 460px;
-  margin: 5% auto;
+  width: 931px;
+  height: 634px;
+  margin: 2% auto;
   text-align: center;
 }
 
 .ipad-image, .ipad-image canvas {
-  width: 565px;
-  height: 400px;
+  width: 762px;
+  height: 524px;
   display: inline-block;
   background: #eaeaea;
 }
 
 .ipad-image {
-  margin-top: 30px;
+  margin-top: 69px;
 }
 
 .turn-timer {
@@ -574,7 +692,7 @@ input[type="checkbox"]:focus{
   padding-right: 15px;
 }
 .ipad-row {
-  margin-left: -5px;
+  margin-left: 0px;
   margin-right: 10px;
 }
 
@@ -655,4 +773,11 @@ input[type="checkbox"]:focus{
   position: fixed;
 }
 
+.text-wrap{
+  text-align: center;
+}
+.call-to-action{
+  color: #f2f2f2;
+  font-family: Omnes_ATTLightRegular;
+}
 

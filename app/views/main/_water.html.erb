@@ -11,8 +11,7 @@
 	<div class="container-wrapper">
 		<h2><%= section.event %></h2>
 		<%= audio_tag (section.audio.music), class: "player", controls: false, autoplay: false, preload: true %>
-		<button data-id="2" class="event-btn play">
-			<%= image_tag("water_active.png", class: "img-swap") %>
+		<button id="water-btn" data-id="2" class="event-btn play">
 		</button>
 	</div>
 <% end %>
