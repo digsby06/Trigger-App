@@ -2,6 +2,38 @@ require 'phidgets-ffi'
 
 class MainController < ApplicationController
 
+
+
+    @@time_check_never_stop = true
+    @@setup = false
+    $ambient_button = 1
+    $last_press_time = Time.now
+
+    thr = Thread.new {
+        puts "thread"
+        time_check
+    }
+
+    def self.check_time
+        if setup == false
+            t = Time.now
+            setup = true
+        end
+
+        t2 = Time.now + 10
+        puts t2
+
+        if t2 >= ($last_press_time + 30)
+            MainController.activate_relay(ifkit, $ambient_button)            
+            if $ambient_button === 6
+                $ambient_button = 1
+            end
+
+        else 
+            $ambient_button += 1
+        end
+    end
+
 	def index
 		@events = Section.all
 		@audio = Audio.all
@@ -10,6 +42,54 @@ class MainController < ApplicationController
 		@third_section = Section.third_section.decorate if Section.third_section
 		@no_sections_found = Section.main_section.nil?
 	end
+
+    def self.trigger_ambient
+        button_id = $ambient_button
+        options = { :serial_number => 403823 }
+        ifkit = Phidgets::InterfaceKit.new(options)
+        ifkit.wait_for_attachment 5000
+
+        if ifkit.outputs.size > 0
+            activate_relay(ifkit, button_id)
+
+            @stat = Stat.find_or_create_by(button_id: button_id, date:DateTime.now.to_date)
+            @stat.count += 1
+            @stat.save
+            render json: @stat
+        else
+            render json: {"error": "No device attached"}
+        end
+        ifkit.close
+    rescue => error
+        ifkit.close
+        
+    end
+
+    def self.timecheck
+        while @@time_check_never_stop
+            compare_time
+            sleep(5)  
+        end
+        puts "test123"
+    end
+
+    def self.compare_time
+        if setup == false
+            t = Time.now
+            setup = true
+        end
+
+        t2 = Time.now + 10
+
+        if t2 >= ($last_press_time + 30)
+            trigger_ambient          
+            if $ambient_button > 5
+                $ambient_button = 1
+            else 
+                $ambient_button += 1
+            end
+        end 
+    end
 
 
 	def trigger
@@ -20,12 +100,6 @@ class MainController < ApplicationController
 
         if ifkit.outputs.size > 0
             activate_relay(ifkit, button_id)
-
-            if @@last_press_time.present?
-                puts "Time to start tracking time."
-                sleep(10)
-                activate_ambient_mode(ifkit, button_id)   
-            end
             
             @stat = Stat.find_or_create_by(button_id: button_id, date:DateTime.now.to_date)
             @stat.count += 1
@@ -69,8 +143,8 @@ class MainController < ApplicationController
     end
 
 
-
     def activate_relay(ifkit, button_id)
+        puts "activate relay"
         relay = ifkit.outputs[button_id.to_i]
         
             case button_id.to_i - 1
@@ -91,8 +165,8 @@ class MainController < ApplicationController
                     relay_0.state = false
                     relay.state = false
                     puts "Finished"
-                    @@last_press_time = Time.now
-                    puts @@last_press_time
+                    $last_press_time = Time.now
+                    puts $last_press_time
 
                 when 1
                     puts "Turning on for 30 seconds"
@@ -101,7 +175,7 @@ class MainController < ApplicationController
                     
                     puts "Shutting off"
                     relay.state = false
-                    @@last_press_time = Time.now
+                    $last_press_time = Time.now
 
 
                 when 2
@@ -111,7 +185,7 @@ class MainController < ApplicationController
                     
                     puts "Shutting off"
                     relay.state = false
-                    @@last_press_time = Time.now
+                    $last_press_time = Time.now
                 
                 when 3
                     puts "Blinking for 30 seconds"
@@ -123,7 +197,7 @@ class MainController < ApplicationController
                         sleep(0.5.seconds)
                     end
                     puts "Finished"
-                    @@last_press_time = Time.now
+                    $last_press_time = Time.now
 
                 when 4..5
                     puts "Turning on for 30 seconds"
@@ -132,42 +206,8 @@ class MainController < ApplicationController
                     
                     puts "Shutting off"
                     relay.state = false
-                    @@last_press_time = Time.now
-                
+                    $last_press_time = Time.now
             end
-    end
-
-    def activate_ambient_mode(ifkit, button_id) 
-        # current_time = Time.now
-        # start_ambient_mode = 1.minutes
-
-        # if TimeDifference.between(@@last_press_time, current_time).in_minutes === start_ambient_mode
-            puts "Starting Ambient Mode"
-            puts "Cycling through all events"
-            
-
-            # until counter > 5 do
-                ambient_mode = ifkit.outputs[button_id.to_i]
-
-                    case button_id.to_i - 1
-                        when 0..5
-                            puts "Turning on for 30 seconds"
-                            relay.state = true
-                            sleep(15.seconds)
-                            
-                            puts "Shutting off"
-                            relay.state = false
-                            @@last_press_time = Time.now
-                    end
-
-            #     button_id.to_i += 1
-            #     counter += 1
-            # end
-
-            puts "Ambient Relay Complete"
-            @@last_press_time = Time.now
-        # end
-    
     end
 
 
