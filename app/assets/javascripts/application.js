@@ -18,20 +18,20 @@
 
 //////////////////////////////////// Toggle Icon Images 
 
-$(document).ready(function(){
-  $(".img-swap").click(function() {
-    $(".img-swap.btn").each(function(){
-        this.src = this.src.replace("_btn", "_active");
-        $(this).removeClass("active");
-    });
-    if ($(this).attr("class") == "img-swap") {
-      this.src = this.src.replace("_active","_btn");
-    } else {
-      this.src = this.src.replace("_btn","_active");
-    }
-    $(this).toggleClass("btn");
-  });
-});
+// $(document).ready(function(){
+//   $(".img-swap").click(function() {
+//     $(".img-swap.btn").each(function(){
+//         this.src = this.src.replace("_btn", "_active");
+//         $(this).removeClass("active");
+//     });
+//     if ($(this).attr("class") == "img-swap") {
+//       this.src = this.src.replace("_active","_btn");
+//     } else {
+//       this.src = this.src.replace("_btn","_active");
+//     }
+//     $(this).toggleClass("btn");
+//   });
+// });
 
 
 //////////////////////////////////// Click to Play Audio
@@ -56,7 +56,7 @@ $(document).ready(function(){
     }    
 });
 
-//////////////////////////////////// One Audio File at at Time
+//////////////////////////////////// Play One Audio File at at Time
 
 document.addEventListener('play', function(e){
     var audios = document.getElementsByTagName('audio');
@@ -74,14 +74,27 @@ $(document).ready(function(e) {
     
    $('audio').on('loadeddata', function(e) {
        console.log('onloadeddata', e.target);
-       $(this).prop("muted", true);
+       $(this).prop("muted", false);
     });
-   var isMuted = true; 
+   
+   var isMuted = false; 
     $('#mutebutton').click(function(e) {
-        isMuted = !isMuted;
+        isMuted = !isMuted; 
         $('audio').prop("muted", isMuted);
+    if (isMuted = true){
+        setTimeout(unMute, 5000);
+        };
+  
     });
-    
+
+///////////////////// Function swaps Mute Button Images through CSS and Controls Audio
+
+    var unMute = function(){        
+            isMuted = false;
+            $('input:checkbox').prop('checked', false);
+            $('audio').prop("muted", isMuted);
+    };
+
 });
 
 

@@ -41,6 +41,8 @@ gem 'phidgets-ffi'
 gem 'ffi', '~> 1.9', '>= 1.9.10'
 gem 'delayed_job_active_record'
 gem 'time_difference'
+gem 'mixpanel-ruby'
+
 
 
 group :development, :test do

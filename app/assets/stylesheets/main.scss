@@ -12,11 +12,14 @@
          **********
          **********
 */
-/* 1. FONTS ---------------------------------------------------------------------- */
+/* 1. AT&T FONTS ---------------------------------------------------------------------- */
 /* 2. DOC SETUP ------------------------------------------------------------------ */
 /* 3. EVENT CONTAINERS ------------------------------------------------------------*/
+/* 4. IPAD NAV BAR ---------------------------------------------------------------------*/
 /* 4. EVENT BUTTONS ---------------------------------------------------------------*/
-/* 3. MEDIA QUERIES -------------------------------------------------------------- */
+/* 5. MUTE BUTTON ---------------------------------------------------------------- */
+/* 6. MEDIA QUERIES -------------------------------------------------------------- */
+
 
 
 /* 1. AT&T Fonts ---------------------------------------------------------------------------------------- */
@@ -392,6 +395,17 @@ hr {
   padding-bottom: 20px;
 }
 
+// .hamburger-menu {
+//   text-align: left;
+//   padding-left: 10px;
+// }
+
+// .hamburger {
+//   text-align: left;
+//   display: inline-block;
+//   width: 25px;
+// }
+
 /* 3. Event Containers ------------------------------------------------------------*/
 
 .container-wrapper {
@@ -403,10 +417,6 @@ hr {
   box-shadow: 5px 3px 17px rgba(0, 0, 0, 0.4);
 }
 
-#bottom-row {
-  margin-bottom:50px; 
-}
-
 .container-wrapper h2 {
   font-family: Omnes_ATTRegularItalic;
   font-size: 20px;
@@ -416,7 +426,9 @@ hr {
   margin-bottom: 5px;
 }
 
- .top-bar {
+/* 4. IPAD NAV BAR ------------------------------------------------------------*/
+
+.top-bar {
     color: #fff;
     display: block;
     font-size: 1.5rem;
@@ -425,6 +437,7 @@ hr {
     z-index: 1;
     background: linear-gradient(to right, #ff7200, #fcb314);
   }
+
 
 #nav-bar-copy p {
     margin-bottom: auto;
@@ -447,15 +460,11 @@ ul#menu li {
 
 ul#menu li:nth-child(2) {
   color: #81017e;
-  font-family: Omnes_ATTRegularRegular;
-  border-bottom: 3px solid #81017e;
+  font-family: Omnes_ATTMediumRegular;
+  border-bottom: 4px solid #81017e;
   width: 65px;
   padding-right: 0px;
   padding-left: 0px;
-}
-
-ul#menu li:first-child {
-  padding: 10px 10px 10px 30px;
 }
 
 #menu li:last-child {
@@ -464,9 +473,14 @@ ul#menu li:first-child {
   float: left;
 }
 
+ul#menu li:first-child {
+  padding: 10px 10px 10px 30px;
+}
 
 
-/* 4. Event Buttons -------------------------------------------------------------- */
+
+/* 5. Event Buttons -------------------------------------------------------------- */
+
 .grid-item {
   position: relative;
   float: left;
@@ -490,6 +504,7 @@ button.event-btn {
   background-size: 150px 150px;
   width: 150px;
   height: 150px;
+  outline: none;
 }
 
 #thermostat-btn:active{
@@ -497,6 +512,7 @@ button.event-btn {
   background-size: 150px 150px;
   width: 150px;
   height: 150px;
+  outline: none;
 
 }
 
@@ -505,6 +521,7 @@ button.event-btn {
   background-size: 150px 150px;
   width: 150px;
   height: 150px;
+  outline: none;
 }
 
 #water-btn:active{
@@ -512,13 +529,15 @@ button.event-btn {
   background-size: 150px 150px;
   width: 150px;
   height: 150px;
-
+  outline: none;
 }
+
 #homesecurity-btn{
   background-image: url("/images/flat_homesecurity_active.png");
   background-size: 150px 150px;
   width: 150px;
   height: 150px;
+  outline: none;
 }
 
 #homesecurity-btn:active{
@@ -526,13 +545,14 @@ button.event-btn {
   background-size: 150px 150px;
   width: 150px;
   height: 150px;
-
+  outline: none;
 }
 #light-btn{
   background-image: url("/images/flat_light_active.png");
   background-size: 150px 150px;
   width: 150px;
   height: 150px;
+  outline: none;
 }
 
 #light-btn:active{
@@ -540,13 +560,14 @@ button.event-btn {
   background-size: 150px 150px;
   width: 150px;
   height: 150px;
-
+  outline: none;
 }
 #outdoorcamera-btn{
   background-image: url("/images/flat_outdoorcamera_active.png");
   background-size: 150px 150px;
   width: 150px;
   height: 150px;
+  outline: none;
 }
 
 #outdoorcamera-btn:active{
@@ -554,6 +575,7 @@ button.event-btn {
   background-size: 150px 150px;
   width: 150px;
   height: 150px;
+  outline: none;
 
 }
 
@@ -562,6 +584,7 @@ button.event-btn {
   background-size: 150px 150px;
   width: 150px;
   height: 150px;
+  outline: none;
 }
 
 #door-btn:active{
@@ -569,10 +592,8 @@ button.event-btn {
   background-size: 150px 150px;
   width: 150px;
   height: 150px;
-
+  outline: none;
 }
-
-
 
 
 .event-btn img {
@@ -586,6 +607,7 @@ button.event-btn {
 .img-swap {
   cursor: pointer;
 }
+
 
 /* 5. Ipad Container -------------------------------------------------------------- */
 
@@ -616,45 +638,44 @@ img {
   margin-top: 69px;
 }
 
-.turn-timer {
-  font-size: 13px;
-  color: #999;
-  padding: 10px 0;
-  text-align: center;
+#bottom-row {
+  margin-bottom:50px; 
 }
 
-@media only screen and (min-width : 320px) and (max-width : 480px), (max-width : 568px) {
-  #ipad-container {
-    background: none;
-    height: auto;
-    width: auto;
-  }
 
-  .ipad-image {
-    padding: 5px;
-    background: #000;
-  }
 
-  .ipad-image, .ipad-image img, .ipad-image canvas {
-    width: 310px;
-    margin-top: 0;
-    height: 234px;
-    display: block;
-  }
-}
+// @media only screen and (min-width : 320px) and (max-width : 480px), (max-width : 568px) {
+//   #ipad-container {
+//     background: none;
+//     height: auto;
+//     width: auto;
+//   }
+
+//   .ipad-image {
+//     padding: 5px;
+//     background: #000;
+//   }
+
+//   .ipad-image, .ipad-image img, .ipad-image canvas {
+//     width: 310px;
+//     margin-top: 0;
+//     height: 234px;
+//     display: block;
+//   }
+// }
 
 /* 5. Mute Button -------------------------------------------------------------- */
 
 
 input[type="checkbox"] {
-    content: url('/images/mute1.png');
+    content: url('/images/mute2.png');
     display: block;
     float: right;
     width: 35px;
     height: 35px;
 }
 input[type="checkbox"]:checked {
-    content: url('/images/mute2.png');
+    content: url('/images/mute1.png');
 }
 
 input[type="checkbox"]:focus{
@@ -776,6 +797,13 @@ input[type="checkbox"]:focus{
 .text-wrap{
   text-align: center;
 }
+
+.mute-wrap{
+  display: block;
+  text-align: left;
+  margin-right: 2%;
+}
+
 .call-to-action{
   color: #f2f2f2;
   font-family: Omnes_ATTLightRegular;

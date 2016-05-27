@@ -1,7 +1,7 @@
 require 'phidgets-ffi'
 
-class MainController < ApplicationController
 
+class MainController < ApplicationController
 
 
     @@time_check_never_stop = true
